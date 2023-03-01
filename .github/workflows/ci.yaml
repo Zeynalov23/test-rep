@@ -13,14 +13,20 @@ jobs:
         uses: hashicorp/setup-terraform@v2
       - name: Terraform Format
         run: terraform fmt
-      - name: Comment step
-        uses: marocchino/sticky-pull-request-comment@v2
-        with:
-         header: format
-         message: |
-          Release ${{ github.sha }} to <https://pr-${{ github.event.number }}.example.com>
       - name: Terraform Init
         run: terraform init
       - name: Terraform Validate
         if: success() || failure()
         run: terraform validate -no-color
+  example_comment_pr:
+    runs-on: ubuntu-latest
+    name: An example job to comment a PR
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Comment PR
+        uses: thollander/actions-comment-pull-request@v2
+        with:
+          message: |
+            Hello world ! :wave:
