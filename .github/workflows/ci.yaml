@@ -5,14 +5,19 @@ on:
 jobs:
   terraform-checks:
     name: Terraform Checks
-    runs-on: [ubuntu-latest]    
+    runs-on: [ubuntu-latest] 
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3.1.0     
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
       - name: Terraform Format
-        run: terraform fmt 
+        run: terraform fmt
+      - uses: marocchino/sticky-pull-request-comment@v2
+        with:
+         header: format
+         message: |
+          Release ${{ github.sha }} to <https://pr-${{ github.event.number }}.example.com>
       - name: Terraform Init
         run: terraform init
       - name: Terraform Validate
