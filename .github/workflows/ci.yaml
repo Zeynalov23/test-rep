@@ -19,10 +19,9 @@ jobs:
           header: release
           message: |
            Release ${{ github.sha }} to <https://pr-${{ github.event.number }}.example.com>
+          run: exit 1 
       - name: Terraform Init
-        run: |
-         terraform init
-         exit 1 
+        run: terraform init
       - name: Terraform Validate
         if: success() || failure()
         run: terraform validate -no-color
