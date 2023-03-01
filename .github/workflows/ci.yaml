@@ -13,7 +13,8 @@ jobs:
         uses: hashicorp/setup-terraform@v2
       - name: Terraform Format
         run: terraform fmt
-      - uses: marocchino/sticky-pull-request-comment@v2
+      - name: Comment step
+        uses: marocchino/sticky-pull-request-comment@v2
         with:
          header: format
          message: |
