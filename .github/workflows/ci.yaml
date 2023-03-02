@@ -19,7 +19,7 @@ jobs:
       - name: Terraform Validate
         run: |
             terraform validate -no-color > result_validate.txt
-            exit 1
+           
       - name: PR comment with file
         if: success() || failure()
         uses: thollander/actions-comment-pull-request@v2
