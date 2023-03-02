@@ -16,6 +16,8 @@ jobs:
          terraform fmt
       - name: Terraform Init
         run: terraform init
+      - name: dir
+        run: ls
       - name: Terraform Validate
         run: |
             terraform validate -no-color > result_validate.txt
