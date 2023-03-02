@@ -19,6 +19,7 @@ jobs:
       - name: dir
         run: ls
       - name: Terraform Validate
+        if: success() || failure()
         run: |
             terraform validate -no-color > result_validate.txt
            
