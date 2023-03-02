@@ -14,26 +14,12 @@ jobs:
       - name: Terraform Format
         run: | 
          terraform fmt
-         exit 1 
-      - name: comment
-        uses: marocchino/sticky-pull-request-comment@v2
-        with:
-          header: release
-          message: Release ${{ github.sha }} to <https://pr-${{ github.event.number }}.example.com>
       - name: Terraform Init
         run: terraform init
       - name: Terraform Validate
         if: success() || failure()
-        run: terraform validate -no-color
-  example_comment_pr:
-    runs-on: ubuntu-latest
-    name: An example job to comment a PR
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-
-      - name: Comment PR
+        run: terraform validate -no-color > result.txt
+      - name: PR comment with file
         uses: thollander/actions-comment-pull-request@v2
         with:
-          message: |
-            Hello world ! :wave:
+           filePath: ./result.txt
