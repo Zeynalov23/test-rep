@@ -15,7 +15,12 @@ jobs:
         run: | 
          terraform fmt
       - name: Terraform Init
-        run: terraform init
+        run: terraform init > result_init.txt
+      - name: PR comment with file
+        if: success() || failure()
+        uses: thollander/actions-comment-pull-request@v2
+        with:
+           filePath: ./result_init.txt
       - name: dir
         run: ls
       - name: Terraform Validate
