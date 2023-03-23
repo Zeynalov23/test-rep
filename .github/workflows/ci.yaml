@@ -11,8 +11,9 @@ jobs:
     steps:
       - name: Setup requirements
         run: |
-          apk update && apk add --no-cache jq py3-pip
-          whereis pip
+          apk update && apk add --no-cache jq py3-pip && ln -sf python3 /usr/bin/python
+      - name: check directory
+        run: ls /usr/bin
       - name: Setup terraform
         uses: hashicorp/setup-terraform@v2.0.3
         with:
