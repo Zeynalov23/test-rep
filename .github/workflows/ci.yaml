@@ -1,5 +1,5 @@
 name: Continuous Integration
-on: [push, pull_request]
+on: [pull_request]
 jobs:
   checkov:
     runs-on: [ubuntu-latest]
@@ -8,7 +8,6 @@ jobs:
       pull-requests: write
     container: node:gallium-alpine
     steps:
-     
       - name: Checkout sourcecode
         uses: actions/checkout@v3.3.0
       - name: Checkov GitHub Action
