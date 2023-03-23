@@ -31,7 +31,7 @@ jobs:
             <details>
             <summary>Show findings</summary>
             \`\`\`markdown
-            $CHECKOV_RESULTS
+            {{ checkovResults }} 
             \`\`\`
             </details>
             `;
