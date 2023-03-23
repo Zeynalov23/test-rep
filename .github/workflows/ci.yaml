@@ -1,43 +1,21 @@
 name: Continuous Integration
 on:
-  pull_request:
-    branches: [main]
+ workflow_dispatch:
 jobs:
-  terraform-checks:
-    name: Terraform Checks
-    runs-on: [ubuntu-latest] 
+  checkov:
+    runs-on: [ubuntu-latest]
+    permissions:
+      contents: read
+      pull-requests: write
+    container: node:gallium-alpine
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v3.1.0     
-      - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v2
-      - name: terraform install
+      - name: Setup requirements
         run: |
-          sudo yum install -y yum-utils
-          sudo yum-config-manager --add-repo https://rpm.releases.hashicorp.com/AmazonLinux/hashicorp.repo
-          sudo yum -y install terraform
-          ls
-          pwd
-          ls /etc/yum.repos.d/hashicorp.repo
-      - name: Terraform Format
-        run: | 
-         terraform fmt
-      - name: Terraform Init
-        run: terraform init > result_init.txt
-      - name: PR comment with file
-        if: success() || failure()
-        uses: thollander/actions-comment-pull-request@v2
+          apk update && apk add --no-cache jq py3-pip
+      - name: Setup terraform
+        uses: hashicorp/setup-terraform@v2.0.3
         with:
-           filePath: ./result_init.txt
-      - name: dir
-        run: ls
-      - name: Terraform Validate
-        if: success() || failure()
+          terraform_wrapper: false
+      - name: Setup checkov
         run: |
-            terraform validate -no-color > result_validate.txt
-           
-      - name: PR comment with file
-        if: success() || failure()
-        uses: thollander/actions-comment-pull-request@v2
-        with:
-           filePath: ./result_validate.txt
+          pip3 install checkov
