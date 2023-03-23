@@ -9,30 +9,19 @@ jobs:
       pull-requests: write
     container: node:gallium-alpine
     steps:
-      - name: Setup requirements
-        run: |
-          apk update && apk add --no-cache jq py3-pip && ln -sf python3 /usr/bin/python
-      - name: check directory
-        run: ls /usr/bin
-      - name: Setup terraform
-        uses: hashicorp/setup-terraform@v2.0.3
-        with:
-          terraform_wrapper: false
-      - name: Setup checkov
-        run: |
-          pip3 install checkov
+     
       - name: Checkout sourcecode
         uses: actions/checkout@v3.3.0
-      - name: Checkov
-        run: |
-          checkov -d . --quiet --framework terraform --output github_failed_only --output-file-path results --baseline .checkov.baseline -s
-      - name: test
+      - name: Checkov GitHub Action
+        uses: bridgecrewio/checkov-action@v12
+        with:
+          # This will add both a CLI output to the console and create a results.sarif file
+          output_format: github_failed_only
+          output_file_path: results
+      - name: check directory
         if: always()
-        run: |
-             ls
-             pwd
+        run: ls /usr/bin
       - name: Update Pull Request
-        
         uses: actions/github-script@v6
         with:
           result-encoding: string
