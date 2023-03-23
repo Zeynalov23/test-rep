@@ -27,6 +27,8 @@ jobs:
         run: |
           checkov -d . --quiet --framework terraform --create-baseline
           checkov -d . --quiet --framework terraform --output github_failed_only --output-file-path results --baseline .checkov.baseline -s
+          ls
+          pwd
       - name: Update Pull Request
         if: always()
         uses: actions/github-script@v6
