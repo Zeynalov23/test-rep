@@ -20,8 +20,9 @@ jobs:
           output_file_path: results
       - name: check directory
         if: always()
-        run: ls /usr/bin
+        run: ls 
       - name: Update Pull Request
+        if: always()
         uses: actions/github-script@v6
         with:
           result-encoding: string
