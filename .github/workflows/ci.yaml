@@ -21,7 +21,6 @@ jobs:
       - name: Setup checkov
         run: |
           pip3 install checkov
-          - name: Checkout sourcecode
       - name: Checkout sourcecode
         uses: actions/checkout@v3.3.0
       - name: Checkov
