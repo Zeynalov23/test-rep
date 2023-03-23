@@ -14,8 +14,8 @@ jobs:
         uses: bridgecrewio/checkov-action@v12
         with:
           # This will add both a CLI output to the console and create a results.sarif file
-          output_format: github_failed_only
-          output_file_path: results
+          output_format: github_failed_only         
+          baseline: .checkov.baseline
       - name: check directory
         if: always()
         run: ls 
