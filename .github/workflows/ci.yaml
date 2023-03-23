@@ -21,3 +21,30 @@ jobs:
       - name: Setup checkov
         run: |
           pip3 install checkov
+          - name: Checkout sourcecode
+      - name: Checkout sourcecode
+        uses: actions/checkout@v3.3.0
+      - name: Checkov
+        run: |
+          checkov -d . --quiet --framework terraform --output github_failed_only --output-file-path results --baseline .checkov.baseline -s
+      - name: Update Pull Request
+        uses: actions/github-script@v6
+        with:
+          result-encoding: string
+          script: |
+            const fs = require('fs')
+            const checkovResults = fs.readFileSync('./results/results_github_failed_only.md')
+            const commentTemplate = `## Checkov findings
+            <details>
+            <summary>Show findings</summary>
+            \`\`\`markdown
+            {{ checkovResults }}
+            \`\`\`
+            </details>
+            `;
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: commentTemplate
+            })
