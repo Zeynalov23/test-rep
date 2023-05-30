@@ -1,0 +1,19 @@
+name: test-deploy
+on:
+  #push:
+  #branches:
+  #- aws-master
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  build_and_deploy:
+    name: Build and Deploy Code
+    runs-on: ubuntu-latest
+    steps:
+      - name: Zip archive
+        uses: thedoctor0/zip-release@master
+        with:
+          type: 'zip'
+          filename: 'code.zip'
+          exclusions: '*.git* integrativeTests/**'
