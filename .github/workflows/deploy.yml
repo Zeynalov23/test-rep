@@ -18,4 +18,4 @@ jobs:
         with:
           type: 'zip'
           filename: 'code.zip'
-          exclusions: '*.git* /integrativeTests/**'
+          exclusions: '*.git* /*integrativeTests/**'
