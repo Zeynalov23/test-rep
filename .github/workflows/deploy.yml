@@ -11,6 +11,8 @@ jobs:
     name: Build and Deploy Code
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout sourcecode
+        uses: actions/checkout@v3.3.0
       - name: Zip archive
         uses: thedoctor0/zip-release@master
         with:
